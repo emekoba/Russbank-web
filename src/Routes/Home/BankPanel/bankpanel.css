@@ -1,0 +1,44 @@
+.bank_input_row {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-top: 30px;
+}
+
+.bank_input_row > div {
+	color: #1c3144;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.bank_panel_item_row2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 30px;
+	margin-bottom: 40px;
+	margin-top: 20px;
+}
+
+.bank_panel_item_row2 > input {
+	width: 100px;
+}
+
+.acct_no {
+	font-size: 25px;
+	font-weight: bolder;
+	color: #1c3144;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+.charts {
+	height: 200px;
+	width: 400px;
+	margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 1060px) {
+	.bank_panel {
+		margin-top: 40px;
+	}
+}

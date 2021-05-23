@@ -1,0 +1,99 @@
+.register {
+	height: 450px;
+	display: grid;
+	place-items: center;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-top: 20px;
+	position: relative;
+}
+
+.form_field {
+	/* height: 400px; */
+	width: 100%;
+	box-shadow: 0.2px 0.2px 5px 1px grey;
+	border-radius: 10px;
+	display: grid;
+	grid-template-columns: 1.8fr auto 1fr;
+}
+
+.divider {
+	box-shadow: 0.2px 0.2px 5px 1px grey;
+}
+
+.left_field {
+	padding: 30px;
+	/* padding-left: 30px;
+	padding-top: 30px; */
+	display: flex;
+}
+
+.left_field_col1 {
+	display: grid;
+	grid-template-rows: repeat(5, 1fr);
+	grid-gap: 40px;
+	align-items: center;
+}
+
+.input_box {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.form_input_descriptor {
+	min-width: 100px;
+	font-size: 20px;
+	color: rgb(51, 65, 65);
+	text-align: end;
+}
+
+.form_input {
+	height: 40px;
+	width: 250px;
+	background: none;
+	border: rgb(51, 65, 65);
+	box-shadow: 0.2px 0.2px 5px 1px grey;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 5px;
+	color: white;
+	font-size: 23px;
+	text-align: center;
+	margin-left: 50px;
+}
+
+.form_input:focus {
+	background: none;
+}
+
+.left_field > div:nth-of-type(3) > input {
+	margin-left: 43px;
+}
+
+.right_field {
+	display: flex;
+	justify-content: space-between;
+	padding-left: 20px;
+}
+
+.checkbox {
+	height: 40px;
+	width: 40px;
+	margin-top: 25px;
+}
+
+@media only screen and (max-width: 600px) {
+	.form_field {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 1fr;
+	}
+
+	.right_field {
+		align-items: center;
+	}
+
+	.checkbox {
+		margin-top: 0px;
+	}
+}

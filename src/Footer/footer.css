@@ -1,0 +1,15 @@
+.footer {
+	/* background: red; */
+	height: 80px;
+	text-align: end;
+	padding-right: 30px;
+	font-size: 30px;
+	font-weight: bold;
+	color: rgb(51, 65, 65);
+}
+
+@media only screen and (max-width: 600px) {
+	.footer {
+		padding-right: 50px;
+	}
+}

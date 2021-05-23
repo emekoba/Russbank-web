@@ -1,0 +1,29 @@
+.header {
+	height: 100px;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 20px;
+}
+
+.header_text {
+	height: 100%;
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+	vertical-align: center;
+	align-items: baseline;
+	padding-top: 50px;
+}
+
+.nav_btn {
+	text-decoration: underline;
+	font-size: large;
+	width: 100px;
+	white-space: nowrap;
+	/* margin-left: 20px;
+	text-align: center; */
+}

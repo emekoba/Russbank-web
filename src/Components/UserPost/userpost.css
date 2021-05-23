@@ -1,0 +1,22 @@
+.userpost {
+	height: 250px;
+	border-radius: 10px;
+	box-shadow: 0.2px 0.2px 5px 1px grey;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.userpost_row {
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 20px;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.userpost_btn {
+	display: flex;
+	width: 100%;
+	justify-content: flex-end;
+}

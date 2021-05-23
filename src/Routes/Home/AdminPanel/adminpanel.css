@@ -1,0 +1,14 @@
+.admin {
+	height: 520px;
+	/* background: red; */
+	overflow-y: scroll;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 40px;
+	padding: 10px;
+	padding-top: 20px;
+}
+
+.admin::-webkit-scrollbar {
+	display: none;
+}
