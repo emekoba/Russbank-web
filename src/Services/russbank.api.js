@@ -1,7 +1,9 @@
 import axios from "axios";
 import { authHeader } from "./auth.header";
 
-const API_URL = "https://localhost:3000/";
+const API_URL = "https://russbank-server.herokuapp.com/";
+
+const LOCAL_API_URL = "http://localhost:9000/";
 
 const ROUTES = {
 	auth: "auth/",
@@ -23,6 +25,37 @@ const getToken = () => {
 	return sessionStorage.getItem("user");
 };
 
+// function registers(form) {
+// 	// return axios
+// 	return fetch(API_URL + ROUTES.auth + ENDPOINT.signup, {
+// 		method: "POST",
+// 		body: JSON.stringify({
+// 			first_name: form.firstName,
+// 			user_role: form.userRole,
+// 			last_name: form.lastName,
+// 			phone_number: form.phoneNumber,
+// 			address: form.address,
+// 			email: form.email,
+// 			password: form.password,
+// 			confirm_password: form.cpassword,
+// 		}),
+
+// 		header: {
+// 			"Content-Type": "application/json",
+// 		},
+// 	})
+// 		.then((res, e) => {
+// 			return {
+// 				success: true,
+// 				data: res.data,
+// 			};
+// 		})
+// 		.catch((e) => {
+// 			console.log(e);
+// 			return { success: false };
+// 		});
+// }
+
 function register(form) {
 	return axios
 		.post(API_URL + ROUTES.auth + ENDPOINT.signup, {
@@ -35,15 +68,15 @@ function register(form) {
 			password: form.password,
 			confirm_password: form.cpassword,
 		})
-		.then((res, e) => {
+		.then((res) => {
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			console.log(e);
-			return { success: false };
+			console.log(e.response.data.errorSource);
+			return { success: false, messages: e };
 		});
 }
 

@@ -30,7 +30,9 @@ function App() {
 
 	const [control] = useContext(Brim);
 
-	const [route, setroute] = useState("home");
+	const [route, setroute] = useState("register");
+
+	const [payload, setpayload] = useState({});
 
 	function logout() {
 		setroute("login");
@@ -40,13 +42,29 @@ function App() {
 		setroute("register");
 	}
 
-	function changeRoute() {
-		switch (route) {
+	function login() {
+		setroute("login");
+	}
+
+	function home() {
+		setroute("home");
+	}
+
+	function changeRoute(to, payload) {
+		switch (to) {
 			case "home":
-				logout();
+				home();
+
+				console.log(payload.data.data);
+
+				setpayload({ ...payload });
 				break;
 
 			case "login":
+				login();
+				break;
+
+			case "register":
 				register();
 				break;
 
@@ -64,9 +82,15 @@ function App() {
 			<Header route={route} changeRoute={changeRoute} register={register} />
 
 			<div style={{ minHeight: 800 }}>
-				{route === "register" && <Register />}
-				{route === "login" && <Login />}
-				{route === "home" && <Home />}
+				{route === "register" && <Register changeRoute={changeRoute} />}
+				{route === "login" && <Login changeRoute={changeRoute} />}
+				{route === "home" && (
+					<Home
+						accountNumber={payload.accountNumber}
+						firstName={payload.user.firstName}
+						lastName={payload.user.lastName}
+					/>
+				)}
 			</div>
 
 			<Footer />

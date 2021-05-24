@@ -4,7 +4,7 @@ import "./register.css";
 import russbankApi from "../../Services/russbank.api";
 import { Brim } from "../../State/Control";
 
-function Register() {
+function Register({ changeRoute }) {
 	const [control, setcontrol] = useContext(Brim);
 
 	const [form, setform] = useState({
@@ -30,7 +30,9 @@ function Register() {
 		}));
 	}
 
-	async function submit() {
+	async function submit(e) {
+		e.preventDefault();
+
 		setcontrol({ ...control, loading: true });
 
 		const resp = await russbankApi.register(form);
@@ -38,6 +40,10 @@ function Register() {
 		setcontrol({ ...control, loading: false });
 
 		console.log(resp);
+
+		if (resp.success) {
+			changeRoute("home", resp);
+		}
 	}
 
 	return (

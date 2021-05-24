@@ -20,6 +20,7 @@ export default function Loader({ color }) {
 				position: "fixed",
 				display: "grid",
 				placeItems: "center",
+				zIndex: 100,
 			}}
 		>
 			<HashLoader
