@@ -1,8 +1,8 @@
 export function authHeader() {
-	const user = JSON.parse(sessionStorage.getItem("user"));
+	const russbank = JSON.parse(sessionStorage.getItem("russbank-user"));
 
-	if (user && user.data.access_token) {
-		return { Authorization: "Bearer " + user.data.access_token };
+	if (russbank && russbank.token) {
+		return { Authorization: "Bearer " + russbank.token };
 	} else {
 		return {};
 	}

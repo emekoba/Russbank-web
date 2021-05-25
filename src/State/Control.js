@@ -6,7 +6,7 @@ export const Control = (props) => {
 	const [control, setcontrol] = useState({
 		loading: false,
 		popup: {
-			isOpen: true,
+			isOpen: false,
 			messages: ["The You dont have suffient balance to process this request"],
 		},
 	});

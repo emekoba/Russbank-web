@@ -10,3 +10,9 @@
 	animation-fill-mode: both;
 	/* box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.5); */
 }
+
+@media only screen and (max-width: 600px) {
+	.glass {
+		border-radius: 10px !important;
+	}
+}

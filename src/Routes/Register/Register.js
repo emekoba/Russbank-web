@@ -4,6 +4,7 @@ import "./register.css";
 import russbankApi from "../../Services/russbank.api";
 import { Brim } from "../../State/Control";
 import { useHistory } from "react-router";
+import Glass from "../../Components/Glass/Glass";
 
 function Register() {
 	const [control, setcontrol] = useContext(Brim);
@@ -54,107 +55,120 @@ function Register() {
 		}
 	}
 
+	const _left_glass_styles = {
+		borderTopRightRadius: 0,
+		borderBottomRightRadius: 0,
+	};
+
+	const _right_glass_styles = {
+		borderTopLeftRadius: 0,
+		borderBottomLeftRadius: 0,
+	};
+
 	return (
 		<div className="register">
 			<form className="form_field" autocomplete="off">
-				<div className="left_field">
-					<div className="left_field_col1">
-						<div className="input_box">
-							<div className="form_input_descriptor">firstname:</div>
-							<input
-								value={form.firstName}
-								className="form_input"
-								type="text"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "firstName")}
-							/>
+				<Glass styles={_left_glass_styles}>
+					<div className="left_field">
+						<div className="left_field_col1">
+							<div className="input_box">
+								<div className="form_input_descriptor">firstname:</div>
+								<input
+									value={form.firstName}
+									className="form_input"
+									type="text"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "firstName")}
+								/>
+							</div>
+
+							<div className="input_box">
+								<div className="form_input_descriptor">lastname:</div>
+								<input
+									value={form.lastName}
+									className="form_input"
+									type="text"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "lastName")}
+								/>
+							</div>
+
+							<div className="input_box">
+								<div className="form_input_descriptor">phone number:</div>
+								<input
+									value={form.phoneNumber}
+									className="form_input"
+									type="number"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "phoneNumber")}
+								/>
+							</div>
+
+							<div className="input_box">
+								<div className="form_input_descriptor">email:</div>
+								<input
+									value={form.email}
+									className="form_input"
+									type="email"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "email")}
+								/>
+							</div>
+
+							<div className="input_box">
+								<div className="form_input_descriptor">address:</div>
+								<input
+									value={form.address}
+									className="form_input"
+									type="text"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "address")}
+								/>
+							</div>
+
+							<div className="input_box">
+								<div className="form_input_descriptor">password:</div>
+								<input
+									value={form.password}
+									className="form_input"
+									type="password"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "password")}
+								/>
+							</div>
+
+							<div className="input_box">
+								<div className="form_input_descriptor">confirm password:</div>
+								<input
+									value={form.cpassword}
+									className="form_input"
+									type="password"
+									autocomplete="off"
+									onChange={(e) => updateForm(e, "cpassword")}
+								/>
+							</div>
 						</div>
 
-						<div className="input_box">
-							<div className="form_input_descriptor">lastname:</div>
-							<input
-								value={form.lastName}
-								className="form_input"
-								type="text"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "lastName")}
-							/>
-						</div>
-
-						<div className="input_box">
-							<div className="form_input_descriptor">phone number:</div>
-							<input
-								value={form.phoneNumber}
-								className="form_input"
-								type="number"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "phoneNumber")}
-							/>
-						</div>
-
-						<div className="input_box">
-							<div className="form_input_descriptor">email:</div>
-							<input
-								value={form.email}
-								className="form_input"
-								type="email"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "email")}
-							/>
-						</div>
-
-						<div className="input_box">
-							<div className="form_input_descriptor">address:</div>
-							<input
-								value={form.address}
-								className="form_input"
-								type="text"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "address")}
-							/>
-						</div>
-
-						<div className="input_box">
-							<div className="form_input_descriptor">password:</div>
-							<input
-								value={form.password}
-								className="form_input"
-								type="password"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "password")}
-							/>
-						</div>
-
-						<div className="input_box">
-							<div className="form_input_descriptor">confirm password:</div>
-							<input
-								value={form.cpassword}
-								className="form_input"
-								type="password"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "cpassword")}
-							/>
-						</div>
+						<div className="left_field_col2"></div>
 					</div>
-
-					<div className="left_field_col2"></div>
-				</div>
-
+				</Glass>
 				<div className="divider"></div>
 
-				<div className="right_field">
-					<div>
-						<input
-							checked={form.userRole === "ADMIN" ? true : false}
-							onChange={() => updateForm("", "userRole")}
-							className="checkbox"
-							type="checkbox"
-							autocomplete="off"
-						/>
-					</div>
+				<Glass styles={_right_glass_styles}>
+					<div className="right_field">
+						<div>
+							<input
+								checked={form.userRole === "ADMIN" ? true : false}
+								onChange={() => updateForm("", "userRole")}
+								className="checkbox"
+								type="checkbox"
+								autocomplete="off"
+							/>
+						</div>
 
-					<RussButton variant="submit" onClick={submit} />
-				</div>
+						<RussButton variant="submit" onClick={submit} />
+					</div>
+				</Glass>
 			</form>
 		</div>
 	);

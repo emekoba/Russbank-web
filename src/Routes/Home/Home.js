@@ -22,19 +22,23 @@ function Home() {
 		admin: false,
 	});
 
+	const [isprocessing, setisprocessing] = useState(false);
+
 	const { accountNumber, accountBalance, firstName, lastName } =
 		useLocation().state;
 
 	function adjustOp(e) {
-		let ohnoki = operation;
+		if (!isprocessing) {
+			let ohnoki = operation;
 
-		Object.keys(operation).map((key, _) => {
-			ohnoki[key] = key === e.target.id ? true : false;
+			Object.keys(operation).map((key, _) => {
+				ohnoki[key] = key === e.target.id ? true : false;
 
-			return null;
-		});
+				return null;
+			});
 
-		setoperation({ ...ohnoki });
+			setoperation({ ...ohnoki });
+		}
 	}
 
 	Object.filter = (obj, predicate) =>
@@ -120,6 +124,8 @@ function Home() {
 							firstName={firstName}
 							lastName={lastName}
 							accountNumber={accountNumber}
+							isprocessing={isprocessing}
+							setisprocessing={setisprocessing}
 						/>
 					)}
 				</div>

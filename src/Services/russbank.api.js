@@ -51,8 +51,8 @@ const getToken = () => {
 // 			};
 // 		})
 // 		.catch((e) => {
-// 			console.log(e);
-// 			return { success: false };
+
+// 			return { success: false, messages: [e.response.data.message] };
 // 		});
 // }
 
@@ -63,14 +63,22 @@ function login(form) {
 			password: form.password,
 		})
 		.then((res) => {
+			if (res.data.user.token) {
+				const sessionObject = {
+					expiresAt: 720,
+					token: res.data.user.token,
+				};
+
+				sessionStorage.setItem("russbank-user", JSON.stringify(sessionObject));
+			}
+
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			console.log(e.response.data.errorSource);
-			return { success: false, messages: e };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 
@@ -93,8 +101,7 @@ function register(form) {
 			};
 		})
 		.catch((e) => {
-			console.log(e.response.data.errorSource);
-			return { success: false, messages: e };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 
@@ -116,8 +123,7 @@ function transfer(form) {
 			};
 		})
 		.catch((e) => {
-			console.log(e);
-			return { success: false };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 
@@ -138,8 +144,7 @@ function deposit(form) {
 			};
 		})
 		.catch((e) => {
-			console.log(e);
-			return { success: false };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 
@@ -160,8 +165,7 @@ function withdraw(form) {
 			};
 		})
 		.catch((e) => {
-			console.log(e);
-			return { success: false };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 
@@ -175,8 +179,7 @@ function getAllUsers() {
 			};
 		})
 		.catch((e) => {
-			console.log(e);
-			return { success: false };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 
@@ -196,8 +199,7 @@ function deleteUser(account_number) {
 			};
 		})
 		.catch((e) => {
-			console.log(e);
-			return { success: false };
+			return { success: false, messages: [e.response.data.message] };
 		});
 }
 

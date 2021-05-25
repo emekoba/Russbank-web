@@ -35,7 +35,7 @@ export default function Popup() {
 						<div className="popup">
 							<div className="popup-row">
 								<button onClick={closePressed}>
-									<img src={close} className="close" />
+									<img src={close} className="close" alt="close" />
 								</button>
 							</div>
 

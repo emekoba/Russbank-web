@@ -11,14 +11,15 @@
 .form_field {
 	/* height: 400px; */
 	width: 100%;
-	box-shadow: 0.2px 0.2px 5px 1px grey;
+	/* box-shadow: 0.2px 0.2px 5px 1px grey; */
 	border-radius: 10px;
 	display: grid;
 	grid-template-columns: 1.8fr auto 1fr;
 }
 
 .divider {
-	box-shadow: 0.2px 0.2px 5px 1px grey;
+	/* box-shadow: 0.2px 0.2px 5px 1px grey; */
+	width: 15px;
 }
 
 .left_field {
@@ -74,7 +75,7 @@
 .right_field {
 	display: flex;
 	justify-content: space-between;
-	padding-left: 20px;
+	padding: 30px;
 }
 
 .checkbox {

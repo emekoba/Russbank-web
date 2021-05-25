@@ -5,8 +5,16 @@ import { Brim } from "../../../State/Control";
 import russbankApi from "../../../Services/russbank.api";
 import { Chart } from "react-charts";
 import RussButton from "../../../Components/RussButton/RussButton";
+import Loader from "../../../Components/Loader/Loader";
 
-export default function BankPanel({ Op, firstName, lastName, accountNumber }) {
+export default function BankPanel({
+	isprocessing,
+	setisprocessing,
+	Op,
+	firstName,
+	lastName,
+	accountNumber,
+}) {
 	const [control, setcontrol] = useContext(Brim);
 
 	const [form, setform] = useState({
@@ -17,14 +25,16 @@ export default function BankPanel({ Op, firstName, lastName, accountNumber }) {
 	});
 
 	function updateForm(e, field) {
-		setform({
-			...form,
-			[`${field}`]: e.target.value,
-		});
+		if (!isprocessing) {
+			setform({
+				...form,
+				[`${field}`]: e.target.value,
+			});
+		}
 	}
 
 	async function go() {
-		setcontrol({ ...control, loading: true });
+		setisprocessing(true);
 
 		const resp =
 			Op === "deposit"
@@ -35,9 +45,19 @@ export default function BankPanel({ Op, firstName, lastName, accountNumber }) {
 				? await russbankApi.transfer(form)
 				: { success: false, error: "Invalid Operation" };
 
-		setcontrol({ ...control, loading: false });
+		if (resp.success) {
+			setisprocessing(false);
 
-		console.log(resp);
+			console.log(resp);
+		} else {
+			setisprocessing(false);
+
+			setcontrol({
+				...control,
+				loading: false,
+				popup: { isOpen: true, messages: resp.messages },
+			});
+		}
 	}
 
 	const data = React.useMemo(
@@ -106,7 +126,11 @@ export default function BankPanel({ Op, firstName, lastName, accountNumber }) {
 				</div>
 
 				<div style={{ display: "grid", placeItems: "center" }}>
-					<RussButton onClick={go} />
+					{isprocessing ? (
+						<Loader variant="grid" size={20} isloading={isprocessing} />
+					) : (
+						<RussButton onClick={go} />
+					)}
 				</div>
 			</div>
 

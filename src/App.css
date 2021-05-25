@@ -2,7 +2,7 @@
 	text-align: center;
 	display: grid;
 	grid-template-rows: 1fr, 1fr, 1fr;
-	position: relative;
+	/* position: relative; */
 }
 
 .particles {
