@@ -1,0 +1,14 @@
+.popup {
+	min-height: 300px;
+	width: 500px;
+}
+
+.close {
+	cursor: pointer;
+}
+
+.popup_msg {
+	font-size: 20px;
+	text-align: left;
+	padding: 20px;
+}

@@ -6,7 +6,7 @@ import russbankApi from "../../../Services/russbank.api";
 import { Chart } from "react-charts";
 import RussButton from "../../../Components/RussButton/RussButton";
 
-export default function BankPanel({ Op, accountNumber }) {
+export default function BankPanel({ Op, firstName, lastName, accountNumber }) {
 	const [control, setcontrol] = useContext(Brim);
 
 	const [form, setform] = useState({
@@ -27,9 +27,13 @@ export default function BankPanel({ Op, accountNumber }) {
 		setcontrol({ ...control, loading: true });
 
 		const resp =
-			Op === "transfer"
+			Op === "deposit"
+				? await russbankApi.deposit(form)
+				: Op === "withdraw"
+				? await russbankApi.withdraw(form)
+				: Op === "transfer"
 				? await russbankApi.transfer(form)
-				: await russbankApi.transfer(form);
+				: { success: false, error: "Invalid Operation" };
 
 		setcontrol({ ...control, loading: false });
 
@@ -74,20 +78,22 @@ export default function BankPanel({ Op, accountNumber }) {
 		<>
 			<div className="bank_panel_item_row2">
 				<div>
-					<div className="bank_input_row">
-						<div>account number:</div>
-						<input
-							style={{ width: 180 }}
-							value={form.account_number}
-							className="form_input"
-							type="number"
-							autocomplete="off"
-							onChange={(e) => updateForm(e, "account_number")}
-						/>
-					</div>
+					{Op !== "deposit" && (
+						<div className="bank_input_row">
+							<div>account number:</div>
+							<input
+								style={{ width: 180 }}
+								value={form.account_number}
+								className="form_input"
+								type="number"
+								autocomplete="off"
+								onChange={(e) => updateForm(e, "account_number")}
+							/>
+						</div>
+					)}
 
 					<div className="bank_input_row">
-						<div>amount</div>
+						<div>amount:</div>
 						<input
 							style={{ width: 80 }}
 							value={form.amount}
@@ -117,7 +123,9 @@ export default function BankPanel({ Op, accountNumber }) {
 			</div>
 
 			<div className="bank_panel_item_row1">
-				<div className="acct_no">{accountNumber}Russell J Emekoba</div>
+				<div className="acct_no">
+					{firstName} {lastName}
+				</div>
 			</div>
 		</>
 	);

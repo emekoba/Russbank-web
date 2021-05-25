@@ -6,18 +6,24 @@ import transfer from "../../Resources/transfer.png";
 import deposit from "../../Resources/deposit.png";
 import withdraw from "../../Resources/withdraw.png";
 import admin from "../../Resources/admin.png";
+import history from "../../Resources/history.png";
 import bank from "../../Resources/bank.png";
 import BankPanel from "./BankPanel/BankPanel";
 import AdminPanel from "./AdminPanel/AdminPanel";
 import russbankApi from "../../Services/russbank.api";
+import { useLocation } from "react-router";
+import Glass from "../../Components/Glass/Glass";
 
-function Home({ accountNumber, firstName, lastName }) {
+function Home() {
 	const [operation, setoperation] = useState({
 		withdraw: false,
 		transfer: false,
 		deposit: true,
 		admin: false,
 	});
+
+	const { accountNumber, accountBalance, firstName, lastName } =
+		useLocation().state;
 
 	function adjustOp(e) {
 		let ohnoki = operation;
@@ -37,6 +43,13 @@ function Home({ accountNumber, firstName, lastName }) {
 			.reduce((res, key) => ((res[key] = obj[key]), key), {});
 
 	let gojo = Object.filter(operation, (_Op) => _Op === true);
+
+	const _glass_styles = {
+		height: 200,
+		width: 200,
+		display: "grid",
+		placeItems: "center",
+	};
 
 	return (
 		<div className="home">
@@ -73,29 +86,44 @@ function Home({ accountNumber, firstName, lastName }) {
 					Admin
 				</button>
 
+				<button onClick={adjustOp} id="admin" className="home_left_item">
+					{operation.history && (
+						<img alt="" src={checkbox} className="home_item_checkbox" />
+					)}
+					<img alt="" src={history} className="home_item_icons" />
+					History
+				</button>
+
 				<div className="admin_btn">
 					<div></div>
 				</div>
 			</div>
 
-			<div className="home_right">
-				<div className="home_right_item_row1">
-					<img alt="" src={bank} className="home_item_icons" />
+			<Glass>
+				<div className="home_right">
+					<div className="home_right_item_row1">
+						<img alt="" src={bank} className="home_item_icons" />
 
-					<div className="acct_no">{accountNumber}09076607130</div>
+						<div className="acct_no">{accountNumber}</div>
+
+						<div className="acct_balance">
+							<span>N</span>
+							<span>{accountBalance}</span>
+						</div>
+					</div>
+
+					{operation.admin ? (
+						<AdminPanel />
+					) : (
+						<BankPanel
+							Op={gojo}
+							firstName={firstName}
+							lastName={lastName}
+							accountNumber={accountNumber}
+						/>
+					)}
 				</div>
-
-				{operation.admin ? (
-					<AdminPanel />
-				) : (
-					<BankPanel
-						Op={gojo}
-						firstName={firstName}
-						lastName={lastName}
-						accountNumber={accountNumber}
-					/>
-				)}
-			</div>
+			</Glass>
 		</div>
 	);
 }

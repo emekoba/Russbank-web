@@ -1,3 +1,7 @@
+:root {
+	--textprimary: #1c3144;
+}
+
 body {
 	margin: 0;
 	/* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -36,4 +40,21 @@ input {
 
 body::-webkit-scrollbar {
 	display: none;
+}
+
+@keyframes bounceIn {
+	0% {
+		opacity: 0;
+		transform: scale(0.3);
+	}
+	/* 50% {
+		opacity: 1;
+		transform: scale(0.5);
+	}
+	70% {
+		transform: scale(0.9);
+	} */
+	100% {
+		transform: scale(1);
+	}
 }

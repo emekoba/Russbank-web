@@ -56,6 +56,24 @@ const getToken = () => {
 // 		});
 // }
 
+function login(form) {
+	return axios
+		.post(API_URL + ROUTES.auth + ENDPOINT.signin, {
+			account_number: form.accountNumber,
+			password: form.password,
+		})
+		.then((res) => {
+			return {
+				success: true,
+				data: res.data,
+			};
+		})
+		.catch((e) => {
+			console.log(e.response.data.errorSource);
+			return { success: false, messages: e };
+		});
+}
+
 function register(form) {
 	return axios
 		.post(API_URL + ROUTES.auth + ENDPOINT.signup, {
@@ -187,6 +205,8 @@ export default {
 	register,
 	transfer,
 	deposit,
+	withdraw,
+	login,
 	getAllUsers,
 	deleteUser,
 };

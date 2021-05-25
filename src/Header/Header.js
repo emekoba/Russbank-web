@@ -1,27 +1,19 @@
 import React from "react";
+import { useHistory, useLocation } from "react-router";
 import "./header.css";
 import Logo from "./Logo/Logo";
 
-function Header({ route, changeRoute }) {
-	function onRouteChange() {
-		{
-			switch (route) {
-				case "home":
-					changeRoute("login");
-					break;
+function Header() {
+	const pathName = useLocation().pathname;
 
-				case "register":
-					changeRoute("login");
-					break;
+	const history = useHistory();
 
-				case "login":
-					changeRoute("register");
-					break;
+	function changeRoute(page) {
+		history.push(`/${page}`);
+	}
 
-				default:
-					break;
-			}
-		}
+	function logout() {
+		history.push("/login");
 	}
 
 	return (
@@ -31,13 +23,23 @@ function Header({ route, changeRoute }) {
 			<div className="header_text"></div>
 
 			<div>
-				<button className="nav_btn" onClick={onRouteChange}>
-					{route === "home"
-						? "sign out"
-						: route === "register"
-						? "login"
-						: "register"}
-				</button>
+				{pathName === "/login" && (
+					<button className="nav_btn" onClick={() => changeRoute("register")}>
+						sign up
+					</button>
+				)}
+
+				{pathName === "/register" && (
+					<button className="nav_btn" onClick={() => changeRoute("signout")}>
+						sign in
+					</button>
+				)}
+
+				{pathName === "/home" && (
+					<button className="nav_btn" onClick={logout}>
+						sign out
+					</button>
+				)}
 			</div>
 		</div>
 	);

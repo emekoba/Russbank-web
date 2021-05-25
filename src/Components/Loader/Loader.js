@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { Brim } from "../../State/Control";
 
 export default function Loader({ color }) {
-	let [control] = useContext(Brim);
+	const [control] = useContext(Brim);
 
 	const override = css`
 		display: block;
@@ -13,22 +13,26 @@ export default function Loader({ color }) {
 	`;
 
 	return (
-		<div
-			style={{
-				height: "100vh",
-				width: "100%",
-				position: "fixed",
-				display: "grid",
-				placeItems: "center",
-				zIndex: 100,
-			}}
-		>
-			<HashLoader
-				color={color ?? "#1C3144"}
-				loading={control.loading}
-				css={override}
-				size={150}
-			/>
-		</div>
+		<>
+			{control.loading && (
+				<div
+					style={{
+						height: "100vh",
+						width: "100%",
+						position: "fixed",
+						display: "grid",
+						placeItems: "center",
+						zIndex: 100,
+					}}
+				>
+					<HashLoader
+						color={color ?? "var(--textprimary)"}
+						loading={control.loading}
+						css={override}
+						size={150}
+					/>
+				</div>
+			)}
+		</>
 	);
 }

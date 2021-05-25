@@ -4,10 +4,10 @@ import Register from "./Routes/Register/Register";
 import Login from "./Routes/Login/Login";
 import Particles from "react-particles-js";
 import Header from "./Header/Header";
-import { useContext, useState } from "react";
 import Footer from "./Footer/Footer";
-import { Brim } from "./State/Control";
 import Loader from "./Components/Loader/Loader";
+import { Redirect, Route, Switch } from "react-router";
+import Popup from "./Components/Popup/Popup";
 
 function App() {
 	let particleOptions = {
@@ -28,69 +28,24 @@ function App() {
 		},
 	};
 
-	const [control] = useContext(Brim);
-
-	const [route, setroute] = useState("register");
-
-	const [payload, setpayload] = useState({});
-
-	function logout() {
-		setroute("login");
-	}
-
-	function register() {
-		setroute("register");
-	}
-
-	function login() {
-		setroute("login");
-	}
-
-	function home() {
-		setroute("home");
-	}
-
-	function changeRoute(to, payload) {
-		switch (to) {
-			case "home":
-				home();
-
-				console.log(payload.data.data);
-
-				setpayload({ ...payload });
-				break;
-
-			case "login":
-				login();
-				break;
-
-			case "register":
-				register();
-				break;
-
-			default:
-				break;
-		}
-	}
-
 	return (
 		<div className="App">
-			{control.loading && <Loader />}
+			<Loader />
+
+			<Popup />
 
 			<Particles className="particles" params={particleOptions} />
 
-			<Header route={route} changeRoute={changeRoute} register={register} />
+			<Header />
 
 			<div style={{ minHeight: 800 }}>
-				{route === "register" && <Register changeRoute={changeRoute} />}
-				{route === "login" && <Login changeRoute={changeRoute} />}
-				{route === "home" && (
-					<Home
-						accountNumber={payload.accountNumber}
-						firstName={payload.user.firstName}
-						lastName={payload.user.lastName}
-					/>
-				)}
+				<Switch>
+					<Route exact path="/" component={Login} />
+					<Route exact path="/register" component={Register} />
+					<Route exact path="/home" component={Home} />
+
+					<Redirect to="/login" />
+				</Switch>
 			</div>
 
 			<Footer />

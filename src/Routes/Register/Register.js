@@ -3,8 +3,9 @@ import RussButton from "../../Components/RussButton/RussButton";
 import "./register.css";
 import russbankApi from "../../Services/russbank.api";
 import { Brim } from "../../State/Control";
+import { useHistory } from "react-router";
 
-function Register({ changeRoute }) {
+function Register() {
 	const [control, setcontrol] = useContext(Brim);
 
 	const [form, setform] = useState({
@@ -17,6 +18,8 @@ function Register({ changeRoute }) {
 		cpassword: "",
 		userRole: "NORMAL",
 	});
+
+	const history = useHistory();
 
 	function updateForm(e, field) {
 		setform((p) => ({
@@ -42,7 +45,12 @@ function Register({ changeRoute }) {
 		console.log(resp);
 
 		if (resp.success) {
-			changeRoute("home", resp);
+			history.push({
+				pathname: "/login",
+				state: {
+					accountNumber: form.phoneNumber,
+				},
+			});
 		}
 	}
 

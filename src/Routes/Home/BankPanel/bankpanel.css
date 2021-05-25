@@ -6,7 +6,7 @@
 }
 
 .bank_input_row > div {
-	color: #1c3144;
+	color: var(--textprimary);
 	font-size: 15px;
 	font-weight: bolder;
 }
@@ -26,7 +26,7 @@
 .acct_no {
 	font-size: 25px;
 	font-weight: bolder;
-	color: #1c3144;
+	color: var(--textprimary);
 	margin-left: 20px;
 	margin-top: 10px;
 }
