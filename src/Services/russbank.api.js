@@ -1,9 +1,8 @@
 import axios from "axios";
 import { authHeader } from "./auth.header";
 
-const API_URL =
-	//  "https://russbank-server.herokuapp.com/";
-	"http://localhost:9000/";
+const API_URL = "https://russbank-server.herokuapp.com/";
+// "http://localhost:9000/";
 
 const LOCAL_API_URL = "http://localhost:9000/";
 
