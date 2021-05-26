@@ -2,7 +2,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	margin-top: 30px;
 }
 
 .bank_input_row > div {
@@ -17,6 +16,7 @@
 	grid-gap: 30px;
 	margin-bottom: 40px;
 	margin-top: 20px;
+	align-items: center;
 }
 
 .bank_panel_item_row2 > input {

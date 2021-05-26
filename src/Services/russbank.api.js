@@ -1,7 +1,9 @@
 import axios from "axios";
 import { authHeader } from "./auth.header";
 
-const API_URL = "https://russbank-server.herokuapp.com/";
+const API_URL =
+	//  "https://russbank-server.herokuapp.com/";
+	"http://localhost:9000/";
 
 const LOCAL_API_URL = "http://localhost:9000/";
 
@@ -18,11 +20,8 @@ const ENDPOINT = {
 	transfer: "transfer",
 	withdraw: "withdraw",
 	all: "all-users",
-	delete: "delete-user",
-};
-
-const getToken = () => {
-	return sessionStorage.getItem("user");
+	delete: "delete-user?",
+	transactions: "transactions",
 };
 
 // function registers(form) {
@@ -44,7 +43,7 @@ const getToken = () => {
 // 			"Content-Type": "application/json",
 // 		},
 // 	})
-// 		.then((res, e) => {
+// 		.then((res) => {
 // 			return {
 // 				success: true,
 // 				data: res.data,
@@ -52,7 +51,7 @@ const getToken = () => {
 // 		})
 // 		.catch((e) => {
 
-// 			return { success: false, messages: [e.response.data.message] };
+// 			return { success: false, messages: [e?.response?.data?.message] };
 // 		});
 // }
 
@@ -63,10 +62,11 @@ function login(form) {
 			password: form.password,
 		})
 		.then((res) => {
-			if (res.data.user.token) {
+			if (res.data.account.token) {
 				const sessionObject = {
+					loginTime: new Date().getTime(),
 					expiresAt: 720,
-					token: res.data.user.token,
+					token: res.data.account.token,
 				};
 
 				sessionStorage.setItem("russbank-user", JSON.stringify(sessionObject));
@@ -78,7 +78,7 @@ function login(form) {
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
@@ -101,7 +101,7 @@ function register(form) {
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
@@ -110,20 +110,19 @@ function transfer(form) {
 		.post(
 			API_URL + ROUTES.bank + ENDPOINT.transfer,
 			{
-				sender: form.sender,
 				recipient: form.recipient,
-				amount: form.amount,
+				amount: parseInt(form.amount),
 			},
 			{ headers: authHeader() }
 		)
-		.then((res, e) => {
+		.then((res) => {
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
@@ -132,19 +131,18 @@ function deposit(form) {
 		.post(
 			API_URL + ROUTES.bank + ENDPOINT.deposit,
 			{
-				amount_number: form.account_number,
-				amount: form.amount,
+				amount: parseInt(form.amount),
 			},
 			{ headers: authHeader() }
 		)
-		.then((res, e) => {
+		.then((res) => {
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
@@ -153,53 +151,69 @@ function withdraw(form) {
 		.post(
 			API_URL + ROUTES.bank + ENDPOINT.withdraw,
 			{
-				amount_number: form.account_number,
-				amount: form.amount,
+				amount: parseInt(form.amount),
 			},
 			{ headers: authHeader() }
 		)
-		.then((res, e) => {
+		.then((res) => {
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
 function getAllUsers() {
 	return axios
-		.get(API_URL + ROUTES.admin + ENDPOINT.all, {}, { headers: authHeader() })
-		.then((res, e) => {
+		.get(API_URL + ROUTES.admin + ENDPOINT.all, { headers: authHeader() })
+		.then((res) => {
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
 function deleteUser(account_number) {
 	return axios
 		.delete(
-			API_URL + ROUTES.admin + ENDPOINT.delete,
-			{
-				account_number,
-			},
+			API_URL +
+				ROUTES.admin +
+				ENDPOINT.delete +
+				`account_number=${account_number}`,
+
 			{ headers: authHeader() }
 		)
-		.then((res, e) => {
+		.then((res) => {
 			return {
 				success: true,
 				data: res.data,
 			};
 		})
 		.catch((e) => {
-			return { success: false, messages: [e.response.data.message] };
+			return { success: false, messages: [e?.response?.data?.message] };
+		});
+}
+
+function getTransactions() {
+	return axios
+		.get(API_URL + ROUTES.bank + ENDPOINT.transactions, {
+			headers: authHeader(),
+		})
+		.then((res) => {
+			return {
+				success: true,
+				data: res.data,
+			};
+		})
+		.catch((e) => {
+			return { success: false, messages: [e?.response?.data?.message] };
 		});
 }
 
@@ -211,4 +225,5 @@ export default {
 	login,
 	getAllUsers,
 	deleteUser,
+	getTransactions,
 };

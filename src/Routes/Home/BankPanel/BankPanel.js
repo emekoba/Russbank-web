@@ -13,7 +13,8 @@ export default function BankPanel({
 	Op,
 	firstName,
 	lastName,
-	accountNumber,
+	home,
+	sethome,
 }) {
 	const [control, setcontrol] = useContext(Brim);
 
@@ -21,10 +22,14 @@ export default function BankPanel({
 		sender: "",
 		recipient: "",
 		amount: "",
-		account_number: "",
+		amount_empty: false,
 	});
 
 	function updateForm(e, field) {
+		if (!form.amount_empty && field === "amount") {
+			setform({ ...form, amount_empty: false });
+		}
+
 		if (!isprocessing) {
 			setform({
 				...form,
@@ -34,29 +39,37 @@ export default function BankPanel({
 	}
 
 	async function go() {
-		setisprocessing(true);
+		if (form.amount === "") {
+			setform({ ...form, amount_empty: true });
+		}
 
-		const resp =
-			Op === "deposit"
-				? await russbankApi.deposit(form)
-				: Op === "withdraw"
-				? await russbankApi.withdraw(form)
-				: Op === "transfer"
-				? await russbankApi.transfer(form)
-				: { success: false, error: "Invalid Operation" };
+		if (form.amount !== "") {
+			setisprocessing(true);
 
-		if (resp.success) {
-			setisprocessing(false);
+			const resp =
+				Op === "deposit"
+					? await russbankApi.deposit(form)
+					: Op === "withdraw"
+					? await russbankApi.withdraw(form)
+					: Op === "transfer"
+					? await russbankApi.transfer(form)
+					: { success: false, error: "Invalid Operation" };
 
-			console.log(resp);
-		} else {
-			setisprocessing(false);
+			if (resp.success) {
+				setisprocessing(false);
 
-			setcontrol({
-				...control,
-				loading: false,
-				popup: { isOpen: true, messages: resp.messages },
-			});
+				setform({ ...form, amount: "" });
+
+				sethome({ ...home, balance: resp.data.account.balance });
+			} else {
+				setisprocessing(false);
+
+				setcontrol({
+					...control,
+					loading: false,
+					popup: { isOpen: true, messages: resp.messages },
+				});
+			}
 		}
 	}
 
@@ -98,16 +111,16 @@ export default function BankPanel({
 		<>
 			<div className="bank_panel_item_row2">
 				<div>
-					{Op !== "deposit" && (
-						<div className="bank_input_row">
-							<div>account number:</div>
+					{Op === "transfer" && (
+						<div className="bank_input_row" style={{ marginBottom: 25 }}>
+							<div>recipient:</div>
 							<input
 								style={{ width: 180 }}
-								value={form.account_number}
+								value={form.recipient}
 								className="form_input"
 								type="number"
-								autocomplete="off"
-								onChange={(e) => updateForm(e, "account_number")}
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "recipient")}
 							/>
 						</div>
 					)}
@@ -115,11 +128,20 @@ export default function BankPanel({
 					<div className="bank_input_row">
 						<div>amount:</div>
 						<input
-							style={{ width: 80 }}
+							style={{
+								width: 80,
+								// background:
+								// 	form.amount === "" && form.amount_empty ? "tomato" : "none",
+								animation:
+									form.amount === "" && form.amount_empty
+										? "flash 1s infinite"
+										: "none",
+							}}
 							value={form.amount}
+							onFocus={() => setform({ ...form, amount_empty: false })}
 							className="form_input"
 							type="number"
-							autocomplete="off"
+							autoComplete="off"
 							onChange={(e) => updateForm(e, "amount")}
 						/>
 					</div>
@@ -127,9 +149,12 @@ export default function BankPanel({
 
 				<div style={{ display: "grid", placeItems: "center" }}>
 					{isprocessing ? (
-						<Loader variant="grid" size={20} isloading={isprocessing} />
+						<Loader variant="scale" size={30} isloading={isprocessing} />
 					) : (
-						<RussButton onClick={go} />
+						<RussButton
+							bounce={form.amount === "" ? false : true}
+							onClick={go}
+						/>
 					)}
 				</div>
 			</div>

@@ -43,14 +43,18 @@ function Register() {
 
 		setcontrol({ ...control, loading: false });
 
-		console.log(resp);
-
 		if (resp.success) {
 			history.push({
 				pathname: "/login",
 				state: {
 					accountNumber: form.phoneNumber,
 				},
+			});
+		} else {
+			setcontrol({
+				...control,
+				loading: false,
+				popup: { isOpen: true, messages: resp.messages },
 			});
 		}
 	}
@@ -67,7 +71,7 @@ function Register() {
 
 	return (
 		<div className="register">
-			<form className="form_field" autocomplete="off">
+			<form className="form_field" autoComplete="off">
 				<Glass styles={_left_glass_styles}>
 					<div className="left_field">
 						<div className="left_field_col1">
@@ -77,7 +81,7 @@ function Register() {
 									value={form.firstName}
 									className="form_input"
 									type="text"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "firstName")}
 								/>
 							</div>
@@ -88,7 +92,7 @@ function Register() {
 									value={form.lastName}
 									className="form_input"
 									type="text"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "lastName")}
 								/>
 							</div>
@@ -99,7 +103,7 @@ function Register() {
 									value={form.phoneNumber}
 									className="form_input"
 									type="number"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "phoneNumber")}
 								/>
 							</div>
@@ -110,7 +114,7 @@ function Register() {
 									value={form.email}
 									className="form_input"
 									type="email"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "email")}
 								/>
 							</div>
@@ -121,7 +125,7 @@ function Register() {
 									value={form.address}
 									className="form_input"
 									type="text"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "address")}
 								/>
 							</div>
@@ -132,7 +136,7 @@ function Register() {
 									value={form.password}
 									className="form_input"
 									type="password"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "password")}
 								/>
 							</div>
@@ -143,7 +147,7 @@ function Register() {
 									value={form.cpassword}
 									className="form_input"
 									type="password"
-									autocomplete="off"
+									autoComplete="off"
 									onChange={(e) => updateForm(e, "cpassword")}
 								/>
 							</div>
@@ -162,7 +166,7 @@ function Register() {
 								onChange={() => updateForm("", "userRole")}
 								className="checkbox"
 								type="checkbox"
-								autocomplete="off"
+								autoComplete="off"
 							/>
 						</div>
 

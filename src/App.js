@@ -8,9 +8,10 @@ import Footer from "./Footer/Footer";
 import Loader from "./Components/Loader/Loader";
 import { Redirect, Route, Switch } from "react-router";
 import Popup from "./Components/Popup/Popup";
+import { useEffect } from "react";
 
 function App() {
-	let particleOptions = {
+	const particleOptions = {
 		polygon: {
 			// enable: true,
 			// type: "inside",
@@ -27,6 +28,23 @@ function App() {
 			},
 		},
 	};
+
+	const russbankSession = JSON.parse(sessionStorage.getItem("russbank-user"));
+
+	useEffect(() => {
+		if (russbankSession) {
+			// const { loginTime, expiresAt } = russbankSession;
+			// console.log(russbankSession);
+			// if (
+			// 	russbankSession &&
+			// 	new Date().getTime() - loginTime <= expiresAt * 1000
+			// ) {
+			// 	console.log("still logged in");
+			// } else {
+			// 	console.log("logged out");
+			// }
+		}
+	}, [russbankSession]);
 
 	return (
 		<div className="App">

@@ -2,152 +2,106 @@ import React, { useContext, useEffect, useState } from "react";
 import UserPost from "../../../Components/UserPost/UserPost";
 import russbankApi from "../../../Services/russbank.api";
 import { Brim } from "../../../State/Control";
+import Loader from "../../../Components/Loader/Loader";
 import "./adminpanel.css";
-
-let dimitrescu = {
-	users: [
-		{
-			balance: 900,
-			currency: "NGN",
-			_id: "60a6f41b7e6e402dc8095904",
-			user: {
-				role: "NORMAL",
-				_id: "60a6f41b7e6e402dc8095905",
-				firstName: "Eniola",
-				lastName: "Olatunji",
-				phoneNumber: 9076381763,
-				address: "No. 2 street akure lagos",
-				email: "klojett.re@gmail.com",
-				createdAt: "2021-05-20T23:43:24.013Z",
-				updatedAt: "2021-05-20T23:43:24.013Z",
-			},
-			password: "$2b$10$OFoIUTgvZIdDUbx13uJUGO/qKrfypcJ2ROYIa1KWLzPb40wdOS8i.",
-			accountNumber: "09076381763",
-			transactions: [
-				{
-					_id: "60a6ffa83c51e11b9461bedf",
-					amount: "700",
-					type: "TRANSFER",
-					sender: "08076607130",
-					createdAt: "2021-05-21T00:32:40.422Z",
-					updatedAt: "2021-05-21T00:32:40.422Z",
-				},
-				{
-					_id: "60a701cd5be3160ff438afb5",
-					amount: "800",
-					type: "DEPOSIT",
-					sender: "08076607130",
-					updatedAt: "2021-05-21T00:41:49.254Z",
-					createdAt: "2021-05-21T00:41:49.254Z",
-				},
-				{
-					_id: "60a701d05be3160ff438afb9",
-					amount: "900",
-					type: "DEPOSIT",
-					sender: "08076607130",
-					updatedAt: "2021-05-21T00:41:52.324Z",
-					createdAt: "2021-05-21T00:41:52.324Z",
-				},
-				{
-					_id: "60a701d45be3160ff438afbd",
-					amount: "1000",
-					type: "DEPOSIT",
-					sender: "08076607130",
-					updatedAt: "2021-05-21T00:41:56.010Z",
-					createdAt: "2021-05-21T00:41:56.010Z",
-				},
-			],
-			createdAt: "2021-05-20T23:43:24.014Z",
-			updatedAt: "2021-05-21T00:41:56.447Z",
-			__v: 14,
-		},
-		{
-			balance: 100,
-			currency: "NGN",
-			_id: "60a7108b3422913670c6a1b4",
-			user: {
-				role: "ADMIN",
-				_id: "60a7108b3422913670c6a1b5",
-				firstName: "Eniola",
-				lastName: "Olatunji",
-				phoneNumber: 9299999999,
-				address: "No. 2 street akure lagos",
-				email: "klojett.re@gmail.com",
-				createdAt: "2021-05-21T01:44:43.389Z",
-				updatedAt: "2021-05-21T01:44:43.389Z",
-			},
-			password: "$2b$10$T7FbNJYGC5YTV2vF/4A5uuQ7gVkknPPlY3yS/.jIQ6a2J//Jv75ii",
-			accountNumber: "09299999999",
-			transactions: [],
-			createdAt: "2021-05-21T01:44:43.391Z",
-			updatedAt: "2021-05-23T01:13:19.235Z",
-			__v: 0,
-			token:
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJiYW5rQWNjb3VudCI6IjA5Mjk5OTk5OTk5IiwidGltZSI6MTYyMTczMjM5OTIyMywiaWF0IjoxNjIxNzMyMzk5LCJleHAiOjE2MjE3MzMxMTl9.wTp-pMaQ8mSE4l0GQRC1z21ELTuOWYEOr1Jk3DTqvM4",
-		},
-	],
-	description: "success",
-	code: 0,
-};
 
 export default function AdminPanel() {
 	const [users, setusers] = useState({});
+
 	const [control, setcontrol] = useContext(Brim);
+
+	const [isloading, setisloading] = useState(false);
+
+	const [deleting, setdeleting] = useState({
+		inProgress: true,
+		id: "",
+	});
 
 	useEffect(() => {
 		(async () => {
-			const resp = await russbankApi.getAllUsers();
-
 			let onyankonpon = {};
 
-			dimitrescu.users.map((e) => {
-				dimitrescu[e.accountNumber] = {
-					userRole: e.user.role,
-					firstName: e.user.firstName,
-					lastName: e.user.lastName,
-					accountNumber: e.accountNumber,
-					address: e.user.address,
-					email: e.user.email,
-					key: e.user.key,
-					amount: e.balance,
-					transactions: e.transactions,
-				};
-			});
+			setisloading(true);
+
+			const resp = await russbankApi.getAllUsers();
+
+			setisloading(false);
+
+			if (resp.success) {
+				console.log(resp);
+
+				resp.data.users.map((e) => {
+					onyankonpon[e.accountNumber] = {
+						userRole: e.user.role,
+						firstName: e.user.firstName,
+						lastName: e.user.lastName,
+						accountNumber: e.accountNumber,
+						address: e.user.address,
+						email: e.user.email,
+						key: e.user.key,
+						amount: e.balance,
+						transactions: e.transactions,
+					};
+				});
+			} else {
+				setcontrol({
+					...control,
+					loading: false,
+					popup: { isOpen: true, messages: resp.messages },
+				});
+			}
 
 			setusers({ ...onyankonpon });
 		})();
 	}, []);
 
-	function deleteUser(id) {
-		setcontrol({ ...control, loading: true });
+	async function deleteUser(id) {
+		setdeleting({ ...deleting, inProgress: true, id: id });
 
-		const resp = russbankApi.deleteUser(users[id].accountNumber);
+		const resp = await russbankApi.deleteUser(users[id].accountNumber);
 
-		setcontrol({ ...control, loading: false });
+		setdeleting({ ...deleting, inProgress: false });
 
-		delete users[id];
+		if (resp.success) {
+			delete users[id];
 
-		setusers({ ...users });
+			setusers({ ...users });
+		} else {
+			setcontrol({
+				...control,
+				loading: false,
+				popup: { isOpen: true, messages: resp.messages },
+			});
+		}
 	}
 
 	return (
-		<div className="admin">
-			{Object.keys(users).map((key, _) => (
-				<UserPost
-					key={key}
-					id={key}
-					accountNumber={users[key].accountNumber}
-					firstName={users[key].firstName}
-					lastName={users[key].lastName}
-					userRole={users[key].userRole}
-					amount={users[key].amount}
-					address={users[key].address}
-					email={users[key].email}
-					transactions={users[key].transactions}
-					onDelete={deleteUser}
-				/>
-			))}
-		</div>
+		<>
+			{isloading ? (
+				<div style={{ display: "grid", placeItems: "center", marginTop: 90 }}>
+					<Loader variant="grid" size={40} isloading={isloading} />
+				</div>
+			) : (
+				<div className="admin">
+					{Object.keys(users).map((key, _) => (
+						<UserPost
+							key={key}
+							id={key}
+							accountNumber={users[key].accountNumber}
+							firstName={users[key].firstName}
+							lastName={users[key].lastName}
+							userRole={users[key].userRole}
+							amount={users[key].amount}
+							address={users[key].address}
+							email={users[key].email}
+							transactions={users[key].transactions}
+							onDelete={deleteUser}
+							deleting={deleting}
+						/>
+					))}
+				</div>
+			)}
+		</>
 	);
 }
 

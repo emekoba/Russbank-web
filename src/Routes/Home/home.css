@@ -54,9 +54,11 @@
 
 .home_right_item_row1 {
 	width: 100%;
-	display: grid;
+	display: flex;
 	align-items: center;
-	grid-template-columns: auto auto 1fr;
+	/* grid-template-columns: auto auto 1fr; */
+	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 .acct_balance {

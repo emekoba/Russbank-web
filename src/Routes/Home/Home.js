@@ -1,5 +1,5 @@
 import "./home.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./home.css";
 import checkbox from "../../Resources/checkbox.png";
 import transfer from "../../Resources/transfer.png";
@@ -13,6 +13,7 @@ import AdminPanel from "./AdminPanel/AdminPanel";
 import russbankApi from "../../Services/russbank.api";
 import { useLocation } from "react-router";
 import Glass from "../../Components/Glass/Glass";
+import HistoryPanel from "./HistoryPanel/HistoryPanel";
 
 function Home() {
 	const [operation, setoperation] = useState({
@@ -20,12 +21,19 @@ function Home() {
 		transfer: false,
 		deposit: true,
 		admin: false,
+		history: false,
 	});
 
 	const [isprocessing, setisprocessing] = useState(false);
 
-	const { accountNumber, accountBalance, firstName, lastName } =
+	const { accountNumber, accountBalance, firstName, lastName, userRole } =
 		useLocation().state;
+
+	const [home, sethome] = useState({
+		balance: accountBalance,
+	});
+
+	useEffect(() => {});
 
 	function adjustOp(e) {
 		if (!isprocessing) {
@@ -59,73 +67,94 @@ function Home() {
 		<div className="home">
 			<div className="home_left">
 				<button onClick={adjustOp} id="deposit" className="home_left_item">
-					{operation.deposit && (
-						<img alt="" src={checkbox} className="home_item_checkbox" />
-					)}
-					<img alt="" src={deposit} className="home_item_icons" />
-					Deposit
+					<span onClick={(e) => (e.target.id = "deposit")}>
+						{operation.deposit && (
+							<img alt="" src={checkbox} className="home_item_checkbox" />
+						)}
+						<img alt="" src={deposit} className="home_item_icons" />
+						Deposit
+					</span>
 				</button>
 
 				<button onClick={adjustOp} id="withdraw" className="home_left_item">
-					{operation.withdraw && (
-						<img alt="" src={checkbox} className="home_item_checkbox" />
-					)}
-					<img alt="" src={withdraw} className="home_item_icons" />
-					Withdraw
+					<span onClick={(e) => (e.target.id = "withdraw")}>
+						{operation.withdraw && (
+							<img alt="" src={checkbox} className="home_item_checkbox" />
+						)}
+						<img alt="" src={withdraw} className="home_item_icons" />
+						Withdraw
+					</span>
 				</button>
 
 				<button onClick={adjustOp} id="transfer" className="home_left_item">
-					{operation.transfer && (
-						<img alt="" src={checkbox} className="home_item_checkbox" />
-					)}
-					<img alt="" src={transfer} className="home_item_icons" />
-					Transfer
+					<span onClick={(e) => (e.target.id = "transfer")}>
+						{operation.transfer && (
+							<img alt="" src={checkbox} className="home_item_checkbox" />
+						)}
+						<img alt="" src={transfer} className="home_item_icons" />
+						Transfer
+					</span>
 				</button>
 
-				<button onClick={adjustOp} id="admin" className="home_left_item">
-					{operation.admin && (
-						<img alt="" src={checkbox} className="home_item_checkbox" />
-					)}
-					<img alt="" src={admin} className="home_item_icons" />
-					Admin
-				</button>
+				{userRole === "ADMIN" && (
+					<button onClick={adjustOp} id="admin" className="home_left_item">
+						<span onClick={(e) => (e.target.id = "admin")}>
+							{operation.admin && (
+								<img alt="" src={checkbox} className="home_item_checkbox" />
+							)}
+							<img alt="" src={admin} className="home_item_icons" />
+							Admin
+						</span>
+					</button>
+				)}
 
-				<button onClick={adjustOp} id="admin" className="home_left_item">
-					{operation.history && (
-						<img alt="" src={checkbox} className="home_item_checkbox" />
-					)}
-					<img alt="" src={history} className="home_item_icons" />
-					History
+				<button onClick={adjustOp} id="history" className="home_left_item">
+					<span onClick={(e) => (e.target.id = "history")}>
+						{operation.history && (
+							<img alt="" src={checkbox} className="home_item_checkbox" />
+						)}
+						<img alt="" src={history} className="home_item_icons" />
+						History
+					</span>
 				</button>
-
-				<div className="admin_btn">
-					<div></div>
-				</div>
 			</div>
 
 			<Glass>
 				<div className="home_right">
 					<div className="home_right_item_row1">
-						<img alt="" src={bank} className="home_item_icons" />
+						<div style={{ display: "flex", alignItems: "center" }}>
+							<img alt="" src={bank} className="home_item_icons" />
 
-						<div className="acct_no">{accountNumber}</div>
+							<div className="acct_no">{accountNumber}</div>
+						</div>
 
 						<div className="acct_balance">
 							<span>N</span>
-							<span>{accountBalance}</span>
+							<span>{home.balance}</span>
 						</div>
 					</div>
 
 					{operation.admin ? (
 						<AdminPanel />
+					) : operation.history ? (
+						<HistoryPanel
+							Op={gojo}
+							firstName={firstName}
+							lastName={lastName}
+							isprocessing={isprocessing}
+							setisprocessing={setisprocessing}
+							home={home}
+							sethome={sethome}
+						/>
 					) : (
 						<BankPanel
 							Op={gojo}
 							firstName={firstName}
 							lastName={lastName}
-							accountNumber={accountNumber}
 							isprocessing={isprocessing}
 							setisprocessing={setisprocessing}
+							home={home}
+							sethome={sethome}
 						/>
 					)}
 				</div>

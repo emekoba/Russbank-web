@@ -38,15 +38,16 @@ function Login() {
 		if (resp.success) {
 			setcontrol({ ...control, loading: false });
 
-			const { user } = resp.data;
+			const { account } = resp.data;
 
 			history.push({
 				pathname: "/home",
 				state: {
-					firstName: user.owner.first_name,
-					lastName: user.owner.last_name,
-					accountNumber: user.account_number,
-					accountBalance: 0,
+					firstName: account.owner.first_name,
+					lastName: account.owner.last_name,
+					accountNumber: account.account_number,
+					accountBalance: account.balance,
+					userRole: account.userRole,
 				},
 			});
 		} else {
