@@ -23,7 +23,7 @@ function Header() {
 			<div className="header_text"></div>
 
 			<div>
-				{pathName === "/login" && (
+				{(pathName === "/login" || pathName === "/") && (
 					<button className="nav_btn" onClick={() => changeRoute("register")}>
 						sign up
 					</button>
