@@ -10,7 +10,6 @@ import history from "../../Resources/history.png";
 import bank from "../../Resources/bank.png";
 import BankPanel from "./BankPanel/BankPanel";
 import AdminPanel from "./AdminPanel/AdminPanel";
-import russbankApi from "../../Services/russbank.api";
 import { useLocation } from "react-router";
 import Glass from "../../Components/Glass/Glass";
 import HistoryPanel from "./HistoryPanel/HistoryPanel";
@@ -63,8 +62,9 @@ function Home() {
 		// width: 200,
 		// display: "grid",
 		// placeItems: "center",
-		width: matches ? "95%" : 500,
-		height: "100%",
+		// width: matches ? 80 : 500,
+		// width: 10,
+		// height: "100px",
 	};
 
 	return (

@@ -9,6 +9,7 @@ import Loader from "./Components/Loader/Loader";
 import { Redirect, Route, Switch } from "react-router";
 import Popup from "./Components/Popup/Popup";
 import { useEffect } from "react";
+import { useMediaQuery } from "@react-hook/media-query";
 
 function App() {
 	const particleOptions = {
@@ -56,7 +57,7 @@ function App() {
 
 			<Header />
 
-			<div style={{ marginTop: 40 }}>
+			<div style={{ marginTop: 40, height: 1400 }}>
 				<Switch>
 					<Route exact path="/" component={Login} />
 					<Route exact path="/login" component={Login} />
@@ -67,7 +68,7 @@ function App() {
 				</Switch>
 			</div>
 
-			{/* <Footer /> */}
+			<Footer />
 		</div>
 	);
 }

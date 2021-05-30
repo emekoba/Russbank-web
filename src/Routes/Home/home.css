@@ -94,4 +94,9 @@
 		padding-right: 0px;
 		grid-gap: 0px;
 	}
+
+	.home_left_item {
+		/* height: 100px; */
+		width: 100%;
+	}
 }
