@@ -1,5 +1,5 @@
 .admin {
-	height: 520px;
+	/* height: 520px; */
 	overflow-y: scroll;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -10,4 +10,10 @@
 
 .admin::-webkit-scrollbar {
 	display: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.admin {
+		grid-template-columns: 1fr;
+	}
 }

@@ -1,28 +1,44 @@
 .login {
-	height: 500px;
+	/* height: 500px; */
 	display: grid;
-	place-items: center;
+	justify-content: center;
 	padding-left: 40px;
 	padding-right: 40px;
-	width: 100%;
 	padding: 30px;
-	padding-top: 100px;
+	/* padding-top: 100px; */
+	width: 100vw;
+	box-sizing: border-box;
 }
 
 .login_form_field {
-	height: 300px;
-	width: 450px;
+	/* height: 300px; */
 	padding: 30px;
 	display: grid;
 	grid-template-rows: 1fr 1fr 1fr;
+	width: 450px;
+	/* width: 100%; */
 }
 
 .login_input {
-	margin-left: 10px;
+	/* margin-left: 10px; */
 	width: 200px;
 }
 
 .login_row3 {
 	display: flex;
 	justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px) {
+	.login {
+		width: 100vw;
+	}
+
+	.login_input {
+		width: 90px;
+	}
+
+	.login_form_field {
+		width: 100%;
+	}
 }

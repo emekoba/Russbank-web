@@ -59,104 +59,107 @@ function Register() {
 		}
 	}
 
-	const _left_glass_styles = {
-		borderTopRightRadius: 0,
-		borderBottomRightRadius: 0,
-	};
-
-	const _right_glass_styles = {
-		borderTopLeftRadius: 0,
-		borderBottomLeftRadius: 0,
+	const _glass_styles = {
+		borderRadius: 10,
 	};
 
 	return (
 		<div className="register">
 			<form className="form_field" autoComplete="off">
-				<Glass styles={_left_glass_styles}>
+				<Glass styles={_glass_styles}>
 					<div className="left_field">
-						<div className="left_field_col1">
-							<div className="input_box">
-								<div className="form_input_descriptor">firstname:</div>
-								<input
-									value={form.firstName}
-									className="form_input"
-									type="text"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "firstName")}
-								/>
-							</div>
-
-							<div className="input_box">
-								<div className="form_input_descriptor">lastname:</div>
-								<input
-									value={form.lastName}
-									className="form_input"
-									type="text"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "lastName")}
-								/>
-							</div>
-
-							<div className="input_box">
-								<div className="form_input_descriptor">phone number:</div>
-								<input
-									value={form.phoneNumber}
-									className="form_input"
-									type="number"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "phoneNumber")}
-								/>
-							</div>
-
-							<div className="input_box">
-								<div className="form_input_descriptor">email:</div>
-								<input
-									value={form.email}
-									className="form_input"
-									type="email"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "email")}
-								/>
-							</div>
-
-							<div className="input_box">
-								<div className="form_input_descriptor">address:</div>
-								<input
-									value={form.address}
-									className="form_input"
-									type="text"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "address")}
-								/>
-							</div>
-
-							<div className="input_box">
-								<div className="form_input_descriptor">password:</div>
-								<input
-									value={form.password}
-									className="form_input"
-									type="password"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "password")}
-								/>
-							</div>
-
-							<div className="input_box">
-								<div className="form_input_descriptor">confirm password:</div>
-								<input
-									value={form.cpassword}
-									className="form_input"
-									type="password"
-									autoComplete="off"
-									onChange={(e) => updateForm(e, "cpassword")}
-								/>
-							</div>
+						<div className="input_box">
+							<div className="form_input_descriptor">firstname:</div>
+							<input
+								value={form.firstName}
+								className="form_input"
+								type="text"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "firstName")}
+							/>
 						</div>
 
-						<div className="left_field_col2"></div>
+						<div className="input_box">
+							<div className="form_input_descriptor">lastname:</div>
+							<input
+								value={form.lastName}
+								className="form_input"
+								type="text"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "lastName")}
+							/>
+						</div>
+
+						<div className="input_box">
+							<div className="form_input_descriptor">phone number:</div>
+							<input
+								value={form.phoneNumber}
+								className="form_input"
+								type="number"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "phoneNumber")}
+							/>
+						</div>
+
+						<div className="input_box">
+							<div className="form_input_descriptor">email:</div>
+							<input
+								value={form.email}
+								className="form_input"
+								type="email"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "email")}
+							/>
+						</div>
+
+						<div className="input_box">
+							<div className="form_input_descriptor">address:</div>
+							<input
+								value={form.address}
+								className="form_input"
+								type="text"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "address")}
+							/>
+						</div>
+
+						<div className="input_box">
+							<div className="form_input_descriptor">password:</div>
+							<input
+								value={form.password}
+								className="form_input"
+								type="password"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "password")}
+							/>
+						</div>
+
+						<div className="input_box">
+							<div className="form_input_descriptor">confirm password:</div>
+							<input
+								value={form.cpassword}
+								className="form_input"
+								type="password"
+								autoComplete="off"
+								onChange={(e) => updateForm(e, "cpassword")}
+							/>
+						</div>
+					</div>
+					<div className="right_field">
+						<div>
+							<input
+								checked={form.userRole === "ADMIN" ? true : false}
+								onChange={() => updateForm("", "userRole")}
+								className="checkbox"
+								type="checkbox"
+								autoComplete="off"
+							/>
+						</div>
+
+						<RussButton variant="submit" onClick={submit} />
 					</div>
 				</Glass>
-				<div className="divider"></div>
+				{/* <div className="divider"></div>
 
 				<Glass styles={_right_glass_styles}>
 					<div className="right_field">
@@ -172,7 +175,7 @@ function Register() {
 
 						<RussButton variant="submit" onClick={submit} />
 					</div>
-				</Glass>
+				</Glass> */}
 			</form>
 		</div>
 	);

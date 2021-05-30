@@ -56,7 +56,7 @@ function App() {
 
 			<Header />
 
-			<div style={{ minHeight: 800 }}>
+			<div style={{ marginTop: 40 }}>
 				<Switch>
 					<Route exact path="/" component={Login} />
 					<Route exact path="/login" component={Login} />
@@ -67,7 +67,7 @@ function App() {
 				</Switch>
 			</div>
 
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 }

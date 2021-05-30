@@ -14,6 +14,7 @@ import russbankApi from "../../Services/russbank.api";
 import { useLocation } from "react-router";
 import Glass from "../../Components/Glass/Glass";
 import HistoryPanel from "./HistoryPanel/HistoryPanel";
+import { useMediaQuery } from "@react-hook/media-query";
 
 function Home() {
 	const [operation, setoperation] = useState({
@@ -32,6 +33,8 @@ function Home() {
 	const [home, sethome] = useState({
 		balance: accountBalance,
 	});
+
+	const matches = useMediaQuery("only screen and (min-width: 400px)");
 
 	useEffect(() => {});
 
@@ -57,10 +60,11 @@ function Home() {
 	let gojo = Object.filter(operation, (_Op) => _Op === true);
 
 	const _glass_styles = {
-		height: 200,
-		width: 200,
-		display: "grid",
-		placeItems: "center",
+		// width: 200,
+		// display: "grid",
+		// placeItems: "center",
+		width: matches ? "95%" : 500,
+		height: "100%",
 	};
 
 	return (
@@ -119,7 +123,7 @@ function Home() {
 				</button>
 			</div>
 
-			<Glass>
+			<Glass styles={_glass_styles}>
 				<div className="home_right">
 					<div className="home_right_item_row1">
 						<div style={{ display: "flex", alignItems: "center" }}>

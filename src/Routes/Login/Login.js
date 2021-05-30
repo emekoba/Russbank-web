@@ -61,7 +61,7 @@ function Login() {
 
 	return (
 		<div className="login">
-			<Glass>
+			<Glass styles={{ width: "100%" }}>
 				<div className="login_form_field">
 					<div className="input_box">
 						<div className="form_input_descriptor">Account Number:</div>

@@ -4,36 +4,21 @@
 	place-items: center;
 	padding-left: 40px;
 	padding-right: 40px;
-	margin-top: 20px;
 	position: relative;
+	margin-top: 50px;
 }
 
 .form_field {
-	/* height: 400px; */
-	width: 100%;
-	/* box-shadow: 0.2px 0.2px 5px 1px grey; */
 	border-radius: 10px;
-	display: grid;
-	grid-template-columns: 1.8fr auto 1fr;
-}
-
-.divider {
-	/* box-shadow: 0.2px 0.2px 5px 1px grey; */
-	width: 15px;
+	margin-right: 50px;
+	margin-left: 50px;
 }
 
 .left_field {
 	padding: 30px;
-	/* padding-left: 30px;
-	padding-top: 30px; */
-	display: flex;
-}
-
-.left_field_col1 {
 	display: grid;
-	grid-template-rows: repeat(5, 1fr);
 	grid-gap: 40px;
-	align-items: center;
+	justify-content: space-between;
 }
 
 .input_box {
@@ -43,15 +28,14 @@
 }
 
 .form_input_descriptor {
-	min-width: 100px;
-	font-size: 20px;
 	color: rgb(51, 65, 65);
 	text-align: end;
+	font-weight: bold;
 }
 
 .form_input {
 	height: 40px;
-	width: 250px;
+	width: 230px;
 	background: none;
 	border: rgb(51, 65, 65);
 	box-shadow: 0.2px 0.2px 5px 1px grey;
@@ -59,7 +43,7 @@
 	padding-right: 20px;
 	border-radius: 5px;
 	color: white;
-	font-size: 23px;
+	font-size: 12px;
 	text-align: center;
 	margin-left: 50px;
 }
@@ -81,20 +65,21 @@
 .checkbox {
 	height: 40px;
 	width: 40px;
-	margin-top: 25px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
 	.form_field {
-		grid-template-columns: 1fr;
-		grid-template-rows: auto 1fr;
+		margin-right: 0px;
+		margin-left: 0px;
 	}
 
-	.right_field {
-		align-items: center;
+	.form_input_descriptor {
+		font-size: 13px;
 	}
 
-	.checkbox {
-		margin-top: 0px;
+	.form_input {
+		height: 40px;
+		width: 150px;
+		margin-left: 30px;
 	}
 }
